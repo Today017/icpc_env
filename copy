@@ -2,14 +2,11 @@
 
 copy_cpp() {
     local cpp_file=$1
-    python3 ./kyopro_library/kyopro_tools/exp.py -r $cpp_file
+    python3 ./kyopro_library/exp.py $cpp_file
 
     if [ $2 == "true" ]; then
         python3 ./atcoder/ac-library/expander.py combined.cpp
     fi
-
-    # combined.cpp の末尾に元のファイル名をコメントとして付け加える
-    echo "//$cpp_file" >> combined.cpp
 
     # ベース名と拡張子を分ける
     local basename="${cpp_file%.*}"
@@ -29,22 +26,30 @@ copy_cpp() {
 
 # メインロジック
 if [ -z "$1" ]; then
-    echo "Usage: $0 <filename (with or without .cpp)> [t]"
+    echo "Usage: $0 {a|b|c|d|e|f|g|h|<file.cpp>} [t]"
     exit 1
 fi
 
-# 拡張子の自動補完ロジック
-# ${1%.cpp} は、「もし末尾が .cpp ならそれを取り除く」という意味
-# その後に .cpp を付け直すことで、二重付与を防ぎつつ補完する
-cpp_file="${1%.cpp}.cpp"
+# コマンド省略用のファイルマッピング
+case $1 in
+    a) cpp_file="a.cpp" ;;
+    b) cpp_file="b.cpp" ;;
+    c) cpp_file="c.cpp" ;;
+    d) cpp_file="d.cpp" ;;
+    e) cpp_file="e.cpp" ;;
+    f) cpp_file="f.cpp" ;;
+    g) cpp_file="g.cpp" ;;
+    h) cpp_file="h.cpp" ;;
+    *) cpp_file=$1 ;;  # 任意のC++ファイルに対応
+esac
+shift
 
-# tオプションが指定された場合はACLをexpandする
-if [ "$2" == "t" ]; then
-    acl_flag="true"
-else
-    acl_flag="false"
-fi
+acl_flag="false"
+
+while getopts "t" opt; do
+    case "$opt" in
+        t) acl_flag="true" ;;
+    esac
+done
 
 copy_cpp $cpp_file $acl_flag
-
-pbcopy<combined.cpp
