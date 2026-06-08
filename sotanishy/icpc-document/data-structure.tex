@@ -1,0 +1,173 @@
+\section{data-structure}
+
+\subsection{Sparse Table}
+
+\begin{small}
+\begin{markdown}
+**Description**
+
+Sparse table は，冪等モノイド $(T, \cdot, e)$ の静的な列の区間積を高速に計算するデータ構造である．
+
+冪等な二項演算とは， $\forall a \in T, a \cdot a = a$ が成り立つような写像 $\cdot: T \times T \rightarrow T$ である．冪等な二項演算には，max, min, gcd, bitwise and, bitwise or などがある．
+
+空間計算量: $O(n \log n)$
+
+**Operations**
+
+- `SparseTable(vector<T> v)`
+    - `v`の要素から sparse table を構築する
+    - 時間計算量: $O(n \log n)$
+- `T fold(int l, int r)`
+    - 区間 $[l, r)$ の値を fold する
+    - 時間計算量: $O(1)$
+
+\end{markdown}
+\end{small}
+
+\begin{lstlisting}
+template <typename M>
+class SparseTable {
+    using T = typename M::T;
+
+   public:
+    SparseTable() = default;
+    explicit SparseTable(const std::vector<T>& v) {
+        int n = v.size(), b = 0;
+        while ((1 << b) <= n) ++b;
+        lookup.resize(b, std::vector<T>(n));
+        std::copy(v.begin(), v.end(), lookup[0].begin());
+        for (int i = 1; i < b; ++i) {
+            for (int j = 0; j + (1 << i) <= n; ++j) {
+                lookup[i][j] =
+                    M::op(lookup[i - 1][j], lookup[i - 1][j + (1 << (i - 1))]);
+            }
+        }
+    }
+
+    T fold(int l, int r) const {
+        if (l == r) return M::id();
+        int i = 31 - __builtin_clz(r - l);
+        return M::op(lookup[i][l], lookup[i][r - (1 << i)]);
+    }
+
+   private:
+    std::vector<std::vector<T>> lookup;
+};
+\end{lstlisting}
+
+\subsection{2D Segment Tree}
+
+\begin{small}
+\begin{markdown}
+**Description**
+
+2D セグメント木は，モノイド $(T, \cdot, e)$ の重みを持つ2次元平面上の点集合に対する一点更新と矩形領域積取得を提供するデータ構造である．
+
+この実装では，重みをもたせる点を先読みして初期化時に渡す必要がある．
+
+空間計算量: $O(n)$
+
+**Operations**
+
+- `SegmentTree2D(vector<pair<X, Y>> pts)`
+    - `pts` の点に対する 2D セグメント木を初期化する
+    - 時間計算量: $O(n\log n)$
+- `void update(X x, Y y, T val)`
+    - 点 $(x, y)$ の重みを $val$ に更新する
+    - 時間計算量: $O((\log n)^2)$
+- `T fold(X sx, X tx, Y sy, Y ty)`
+    - 矩形領域 $[sx, tx) \times [sy, ty)$ 内の点の重みの積を取得する
+    - 時間計算量: $O((\log n)^2)$
+
+\end{markdown}
+\end{small}
+
+\begin{lstlisting}
+#include "segment_tree.hpp"
+
+template <typename X, typename Y, typename M>
+class SegmentTree2D {
+    using T = typename M::T;
+
+public:
+    SegmentTree2D() = default;
+    explicit SegmentTree2D(const std::vector<std::pair<X, Y>>& pts) {
+        for (auto& [x, y] : pts) {
+            xs.push_back(x);
+        }
+        std::sort(xs.begin(), xs.end());
+        xs.erase(std::unique(xs.begin(), xs.end()), xs.end());
+
+        const int n = xs.size();
+        size = 1;
+        while (size < n) size <<= 1;
+        ys.resize(2 * size);
+        seg.resize(2 * size);
+
+        for (auto& [x, y] : pts) {
+            ys[size + getx(x)].push_back(y);
+        }
+
+        for (int i = 0; i < n; ++i) {
+            std::sort(ys[size + i].begin(), ys[size + i].end());
+            ys[size + i].erase(std::unique(ys[size + i].begin(), ys[size + i].end()), ys[size + i].end());
+        }
+        for (int i = size - 1; i > 0; --i) {
+            std::merge(ys[2*i].begin(), ys[2*i].end(), ys[2*i+1].begin(), ys[2*i+1].end(), std::back_inserter(ys[i]));
+            ys[i].erase(std::unique(ys[i].begin(), ys[i].end()), ys[i].end());
+        }
+        for (int i = 0; i < size + n; ++i) {
+            seg[i] = SegmentTree<M>(ys[i].size());
+        }
+    }
+
+    T get(X x, Y y) const {
+        int kx = getx(x);
+        assert(kx < (int) xs.size() && xs[kx] == x);
+        kx += size;
+        int ky = gety(kx, y);
+        assert(ky < (int) ys[kx].size() && ys[kx][ky] == y);
+        return seg[kx][ky];
+    }
+
+    void update(X x, Y y, T val) {
+        int kx = getx(x);
+        assert(kx < (int) xs.size() && xs[kx] == x);
+        kx += size;
+        int ky = gety(kx, y);
+        assert(ky < (int) ys[kx].size() && ys[kx][ky] == y);
+        seg[kx].update(ky, val);
+        while (kx >>= 1) {
+            ky = gety(kx, y);
+            int kl = gety(2*kx, y), kr = gety(2*kx+1, y);
+            T vl = (kl < (int) ys[2*kx].size() && ys[2*kx][kl] == y ? seg[2*kx][kl] : M::id());
+            T vr = (kr < (int) ys[2*kx+1].size() && ys[2*kx+1][kr] == y ? seg[2*kx+1][kr] : M::id());
+            seg[kx].update(ky, M::op(vl, vr));
+        }
+    }
+
+    T fold(X sx, X tx, Y sy, Y ty) const {
+        T ret = M::id();
+        for (int l = size + getx(sx), r = size + getx(tx); l < r; l >>= 1, r >>= 1) {
+            if (l & 1) {
+                ret = M::op(ret, seg[l].fold(gety(l, sy), gety(l, ty)));
+                ++l;
+            }
+            if (r & 1) {
+                --r;
+                ret = M::op(ret, seg[r].fold(gety(r, sy), gety(r, ty)));
+            }
+        }
+        return ret;
+    }
+
+private:
+    int size;
+    std::vector<X> xs;
+    std::vector<std::vector<Y>> ys;
+    std::vector<SegmentTree<M>> seg;
+
+    int getx(X x) const { return std::lower_bound(xs.begin(), xs.end(), x) - xs.begin(); }
+    int gety(int k, Y y) const { return std::lower_bound(ys[k].begin(), ys[k].end(), y) - ys[k].begin(); }
+};
+\end{lstlisting}

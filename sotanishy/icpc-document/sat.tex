@@ -1,0 +1,35 @@
+\section{sat}
+
+\subsection{2-SAT}
+
+\begin{small}
+\begin{markdown}
+- `vector<bool> two\_sat(int n, vector<tuple<int, bool, int, bool>> clauses)`
+    - $n$ リテラルを含む節のリストが与えられた時，すべての節を充足するリテラルの真偽値の組み合わせを一つ返す．節は `{i, f, j, g}` の形で与え，$((x\_i = f) \lor (x\_j = g))$ を追加する．問題が充足可能でない場合，空リストを返す．
+    - 時間計算量: $O(n)$
+\end{markdown}
+\end{small}
+
+\begin{lstlisting}
+#include "../graph/scc.cpp"
+
+std::vector<bool> two_sat(int n, const std::vector<std::tuple<int, bool, int, bool>>& clauses) {
+    std::vector<std::vector<int>> G(2 * n);
+    std::vector<bool> val(n);
+
+    for (auto& [i, f, j, g] : clauses) {
+        G[n * f + i].push_back(n * (!g) + j);
+        G[n * g + j].push_back(n * (!f) + i);
+    }
+
+    auto comp = scc(G);
+    for (int i = 0; i < n; ++i) {
+        if (comp[i] == comp[n + i]) {
+            // not satisfiable
+            return {};
+        }
+        val[i] = comp[i] > comp[n + i];
+    }
+    return val;
+}
+\end{lstlisting}

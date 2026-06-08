@@ -1,0 +1,79 @@
+\section{math}
+
+\subsection{Bostan-Mori Algorithm}
+
+\begin{small}
+\begin{markdown}
+**Description**
+
+Bostan-Mori algorithm は，$d$ 階線形漸化式の第 $n$ 項を高速に求めるアルゴリズムである．
+
+**Operations**
+
+- `T bostan\_mori\_division(Polynomial<T> p, Polynomial<T> q, long long n)`
+    - $p(x)/q(x)$ の第 $n$ 項を求める．
+    - 時間計算量: $O(\mathsf{M}(k) \log n)$, $\mathsf{M(k)}$ は$k$次多項式乗算の計算量 (FFT なら $O(k\log k)$)
+- `T bostan\_mori\_recurrence(vector<T> a, vector<T> c, long long n)`
+    - 初めの $k$ 項 $a\_0, \dots, a\_{k-1}$ と漸化式 $a\_n = c\_0 a\_{n-1} + \dots + c\_{k-1} a\_{n-k}$ によって定まる数列 $(a\_n)$ の第 $n$ 項を求める．
+    - 時間計算量: 同上
+
+\end{markdown}
+\end{small}
+
+\begin{lstlisting}
+#include "../convolution/ntt.hpp"
+#include "../math/polynomial.cpp"
+
+template <typename T>
+T bostan_mori_division(Polynomial<T> p, Polynomial<T> q, long long n) {
+    auto take = [&](const std::vector<T>& p, int s) {
+        std::vector<T> r((p.size() + 1) / 2);
+        for (int i = 0; i < (int) r.size(); ++i) {
+            if (2 * i + s < (int) p.size()) {
+                r[i] = p[2 * i + s];
+            }
+        }
+        return r;
+    };
+
+    while (n > 0) {
+        auto qm = q;
+        for (int i = 1; i < (int) qm.size(); i += 2) qm[i] = -qm[i];
+        p = take(p * qm, n & 1);
+        q = take(q * qm, 0);
+        n >>= 1;
+    }
+
+    return p[0] / q[0];
+}
+
+template <typename T>
+T bostan_mori_recurrence(const std::vector<T>& a, const std::vector<T>& c, long long n) {
+    const int d = c.size();
+    if (n < d) return a[n];
+
+    std::vector<T> q(d + 1);
+    q[0] = 1;
+    for (int i = 0; i < d; ++i) q[i + 1] = -c[i];
+    auto p = convolution(a, q);
+    p.resize(d);
+
+    auto take = [&](const std::vector<T>& p, int s) {
+        std::vector<T> r((p.size() + 1) / 2);
+        for (int i = 0; i < (int) r.size(); ++i) {
+            r[i] = p[2 * i + s];
+        }
+        return r;
+    };
+
+    while (n > 0) {
+        auto qm = q;
+        for (int i = 1; i < (int) qm.size(); i += 2) qm[i] = -qm[i];
+        p = take(convolution(p, qm), n & 1);
+        q = take(convolution(q, qm), 0);
+        n >>= 1;
+    }
+
+    return p[0] / q[0];
+}
+\end{lstlisting}

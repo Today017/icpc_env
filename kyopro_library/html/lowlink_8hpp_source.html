@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Kyopro Library: graph/lowlink.hpp ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Kyopro Library
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('lowlink_8hpp_source.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">lowlink.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="lowlink_8hpp.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#</span><span class="preprocessor">include</span><span class="preprocessor">&quot;../../kyopro_library/template.hpp&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">///@brief 橋と関節点の情報</span></div>
+<div class="foldopen" id="foldopen00004" data-start="{" data-end="};">
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="struct_bridge_info.html">    4</a></span><span class="keyword">struct</span> <a class="code hl_struct" href="struct_bridge_info.html">BridgeInfo</a> {</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="struct_bridge_info.html#aaaf5c030e642505d500d0df745738c6a">    5</a></span>    <a class="code hl_variable" href="struct_bridge_info.html#aaaf5c030e642505d500d0df745738c6a">vector</a>&lt;<a class="code hl_variable" href="struct_bridge_info.html#aaaf5c030e642505d500d0df745738c6a">pair</a>&lt;<span class="keywordtype">int</span>,<span class="keywordtype">int</span>&gt;&gt; <a class="code hl_variable" href="struct_bridge_info.html#aaaf5c030e642505d500d0df745738c6a">bridge</a>; <span class="comment">///&lt; 橋</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="struct_bridge_info.html#a6b242119a665ab0dbb8484587372e8f7">    6</a></span>    <a class="code hl_variable" href="struct_bridge_info.html#a6b242119a665ab0dbb8484587372e8f7">vector</a>&lt;<span class="keywordtype">int</span>&gt; <a class="code hl_variable" href="struct_bridge_info.html#a6b242119a665ab0dbb8484587372e8f7">articulation</a>; <span class="comment">///&lt; 関節点</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>};</div>
+</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">///@brief Low Link のアルゴリズムによりグラフGの橋と関節点を求める</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">///@note O(V+E)</span></div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="}">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="lowlink_8hpp.html#af6e453f0c2a7fabe7daa8df205eba892">   11</a></span><a class="code hl_struct" href="struct_bridge_info.html">BridgeInfo</a> <a class="code hl_function" href="lowlink_8hpp.html#af6e453f0c2a7fabe7daa8df205eba892">LowLink</a>(<span class="keyword">const</span> vector&lt;vector&lt;<span class="keywordtype">int</span>&gt;&gt;&amp; g) {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keywordtype">int</span> n=g.size();</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    vector&lt;<span class="keywordtype">int</span>&gt; ord(n,-1), low(n,-1), articulation,seen(n,<span class="keyword">false</span>);</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    vector&lt;pair&lt;<span class="keywordtype">int</span>,<span class="keywordtype">int</span>&gt;&gt; bridge;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">auto</span> dfs=[&amp;](<span class="keyword">auto</span>&amp;&amp; dfs, <span class="keywordtype">int</span> now, <span class="keywordtype">int</span> pre, <span class="keywordtype">int</span>&amp; cnt)-&gt; <span class="keywordtype">void</span> {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        seen[now]=<span class="keyword">true</span>; ord[now]=low[now]=cnt++;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keywordtype">bool</span> is_articulation=<span class="keyword">false</span>;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keywordtype">int</span> child=0;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> nxt: g[now]) {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            <span class="keywordflow">if</span>(!seen[nxt]) {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>                child++;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>                dfs(dfs,nxt,now,cnt);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                low[now]=min(low[now],low[nxt]);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>                <span class="keywordflow">if</span>(pre!=-1 &amp;&amp; ord[now]&lt;=low[nxt]) is_articulation=<span class="keyword">true</span>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                <span class="keywordflow">if</span>(ord[now]&lt;low[nxt]) bridge.push_back(minmax(now,nxt));</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            }</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span>(nxt!=pre) low[now]=min(low[now],ord[nxt]);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        }</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordflow">if</span>(pre==-1 &amp;&amp; child&gt;1) is_articulation=<span class="keyword">true</span>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordflow">if</span>(is_articulation) articulation.push_back(now);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    };</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordtype">int</span> cnt=0;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_define" href="template_8hpp.html#afc28855f97302d38207feabfda45fc97">rep</a>(i,n) <span class="keywordflow">if</span>(!seen[i]) dfs(dfs,i,-1,cnt);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    sort(<a class="code hl_define" href="template_8hpp.html#a9064c572b2b33295a5ca0950d4f8737e">all</a>(bridge));</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    sort(<a class="code hl_define" href="template_8hpp.html#a9064c572b2b33295a5ca0950d4f8737e">all</a>(articulation));</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordflow">return</span> {bridge,articulation};</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>}</div>
+</div>
+<div class="ttc" id="alowlink_8hpp_html_af6e453f0c2a7fabe7daa8df205eba892"><div class="ttname"><a href="lowlink_8hpp.html#af6e453f0c2a7fabe7daa8df205eba892">LowLink</a></div><div class="ttdeci">BridgeInfo LowLink(const vector&lt; vector&lt; int &gt; &gt; &amp;g)</div><div class="ttdoc">Low Link のアルゴリズムによりグラフGの橋と関節点を求める</div><div class="ttdef"><b>Definition</b> <a href="#l00011">lowlink.hpp:11</a></div></div>
+<div class="ttc" id="astruct_bridge_info_html"><div class="ttname"><a href="struct_bridge_info.html">BridgeInfo</a></div><div class="ttdoc">橋と関節点の情報</div><div class="ttdef"><b>Definition</b> <a href="#l00004">lowlink.hpp:4</a></div></div>
+<div class="ttc" id="astruct_bridge_info_html_a6b242119a665ab0dbb8484587372e8f7"><div class="ttname"><a href="struct_bridge_info.html#a6b242119a665ab0dbb8484587372e8f7">BridgeInfo::articulation</a></div><div class="ttdeci">vector&lt; int &gt; articulation</div><div class="ttdoc">関節点</div><div class="ttdef"><b>Definition</b> <a href="#l00006">lowlink.hpp:6</a></div></div>
+<div class="ttc" id="astruct_bridge_info_html_aaaf5c030e642505d500d0df745738c6a"><div class="ttname"><a href="struct_bridge_info.html#aaaf5c030e642505d500d0df745738c6a">BridgeInfo::bridge</a></div><div class="ttdeci">vector&lt; pair&lt; int, int &gt; &gt; bridge</div><div class="ttdoc">橋</div><div class="ttdef"><b>Definition</b> <a href="#l00005">lowlink.hpp:5</a></div></div>
+<div class="ttc" id="atemplate_8hpp_html_a9064c572b2b33295a5ca0950d4f8737e"><div class="ttname"><a href="template_8hpp.html#a9064c572b2b33295a5ca0950d4f8737e">all</a></div><div class="ttdeci">#define all(x)</div><div class="ttdef"><b>Definition</b> <a href="template_8hpp_source.html#l00006">template.hpp:6</a></div></div>
+<div class="ttc" id="atemplate_8hpp_html_afc28855f97302d38207feabfda45fc97"><div class="ttname"><a href="template_8hpp.html#afc28855f97302d38207feabfda45fc97">rep</a></div><div class="ttdeci">#define rep(i, n)</div><div class="ttdef"><b>Definition</b> <a href="template_8hpp_source.html#l00004">template.hpp:4</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_12552d7fa429bf94a2e32e5cf39f7e69.html">graph</a></li><li class="navelem"><a class="el" href="lowlink_8hpp.html">lowlink.hpp</a></li>
+    <li class="footer">構築: <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

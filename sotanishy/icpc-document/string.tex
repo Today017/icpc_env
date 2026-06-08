@@ -1,0 +1,89 @@
+\section{string}
+
+\subsection{Manacher's Algorithm}
+
+\begin{small}
+\begin{markdown}
+**Description**
+
+Manacher のアルゴリズムは，文字列中の回文である部分文字列を求めるアルゴリズムである．
+
+返り値を$A$とする．$S\_i$を中心とする最大の回文の長さを$x$とすると，$A[2i] = (x + 1) / 2$．$S\_iS\_{i+1}$を中心とする最大の回文の長さを$x$とすると，$A[2i + 1] = x / 2$．
+
+- `vector<int> manacher(string s)`
+    - Manacher のアルゴリズムを実行する
+    - 時間計算量: $O(n)$
+
+\end{markdown}
+\end{small}
+
+\begin{lstlisting}
+std::vector<int> manacher(const std::string& s) {
+    int n = s.size();
+    std::vector<int> vs(2 * n - 1);
+    // odd length
+    for (int i = 0, l = 0, r = -1; i < n; ++i) {
+        int k = (i > r) ? 1 : std::min(vs[2 * (l + r - i)], r - i + 1);
+        while (0 <= i - k && i + k < n && s[i - k] == s[i + k]) ++k;
+        vs[2 * i] = k;
+        --k;
+        if (i + k > r) {
+            l = i - k;
+            r = i + k;
+        }
+    }
+    // even length
+    for (int i = 1, l = 0, r = -1; i < n; ++i) {
+        int k = (i > r) ? 0 : std::min(vs[2 * (l + r - i + 1) - 1], r - i + 1);
+        while (0 <= i - k - 1 && i + k < n && s[i - k - 1] == s[i + k]) ++k;
+        vs[2 * i - 1] = k;
+        --k;
+        if (i + k > r) {
+            l = i - k - 1;
+            r = i + k;
+        }
+    }
+    return vs;
+}
+\end{lstlisting}
+
+\subsection{min\_cyclic\_shift.hpp}
+
+\begin{small}
+\begin{markdown}
+
+\end{markdown}
+\end{small}
+
+\begin{lstlisting}
+/**
+ * @brief Minimum Cyclic String
+ */
+
+template <typename T>
+std::vector<T> min_cyclic_string(const std::vector<T>& s) {
+    int n = s.size();
+    auto ss = s;
+    ss.insert(ss.end(), s.begin(), s.end());
+    int i = 0, ans = 0;
+    while (i < n) {
+        ans = i;
+        int j = i + 1, k = i;
+        while (j < 2 * n && ss[k] <= ss[j]) {
+            if (ss[k] < ss[j])
+                k = i;
+            else
+                k++;
+            j++;
+        }
+        while (i <= k) i += j - k;
+    }
+    return std::vector<T>(ss.begin() + ans, ss.begin() + ans + n);
+}
+
+std::string min_cyclic_string(const std::string& s) {
+    auto res = min_cyclic_string(std::vector<char>(s.begin(), s.end()));
+    return std::string(res.begin(), res.end());
+}
+
+\end{lstlisting}
