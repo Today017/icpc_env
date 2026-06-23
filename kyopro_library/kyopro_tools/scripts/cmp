@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# カラーテキスト用のANSIエスケープコード
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # 色をリセットするコード
+
+# C++ファイルをコンパイルして実行する関数
+compile_cpp() {
+    local cpp_file=$1
+    # ファイルが存在するかチェック
+    if [ ! -f "$cpp_file" ]; then
+        echo -e "${RED}Error: $cpp_file not found.${NC}"
+        exit 1
+    fi
+    g++ $cpp_file -std=c++20 -I. -O2 -D_GLIBCXX_DEBUG -Wall -Wextra -DTDY -o a
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}Compilation failed.${NC}"
+        exit 1
+    fi
+    echo -e "${GREEN}Compilation succeeded.${NC}"
+}
+
+# C++ファイルをDEBUGフラグでコンパイルして実行する関数
+compile_cpp_local() {
+    local cpp_file=$1
+    # ファイルが存在するかチェック
+    if [ ! -f "$cpp_file" ]; then
+        echo -e "${RED}Error: $cpp_file not found.${NC}"
+        exit 1
+    fi
+    g++ $cpp_file -std=c++20 -DDEBUG -I. -O2 -D_GLIBCXX_DEBUG -DTDY -o a
+    if [ $? -ne 0 ];then
+        echo -e "${RED}Compilation failed.${NC}"
+        exit 1
+    fi
+    echo -e "${GREEN}Compilation succeeded.${NC}"
+}
+
+# メインロジック
+if [ -z "$1" ]; then
+    echo "Usage: $0 <filename (with or without .cpp)> [t]"
+    exit 1
+fi
+
+# 拡張子の自動補完ロジック
+# ${1%.cpp} は、「もし末尾が .cpp ならそれを取り除く」という意味
+# その後に .cpp を付け直すことで、二重付与を防ぎつつ補完する
+cpp_file="${1%.cpp}.cpp"
+
+# tオプションが指定された場合はcompile_cpp_local()を呼び出し、それ以外はcompile_cpp()を呼び出す
+if [ "$2" == "t" ]; then
+    compile_cpp_local "$cpp_file"
+else
+    compile_cpp "$cpp_file"
+fi

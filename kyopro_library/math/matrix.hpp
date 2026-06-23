@@ -1,30 +1,44 @@
-#include"../../kyopro_library/template.hpp"
+#pragma once
+#include "../../kyopro_library/template.hpp"
 
-template<typename Ring>
+/// @brief 行列積
+/// @tparam Ring 演算を行う環・半環
+/// @note O(N^3)
+template <typename Ring>
 vector<vector<typename Ring::Type>> MatMul(
     const vector<vector<typename Ring::Type>>& A,
-    const vector<vector<typename Ring::Type>>& B
-) {
-    using Type=typename Ring::Type;
-    int N=A.size();
-    vector<vector<Type>> ret(N,vector<Type>(N,Ring::zero()));
-    rep(i,N) rep(j,N) rep(k,N) ret[i][j]=Ring::plus(ret[i][j],Ring::mul(A[i][k],B[k][j]));
+    const vector<vector<typename Ring::Type>>& B) {
+    using Type = typename Ring::Type;
+    int N = A.size();
+    vector<vector<Type>> ret(N, vector<Type>(N, Ring::zero()));
+    rep(i, N) rep(j, N) rep(k, N) ret[i][j] = Ring::plus(ret[i][j], Ring::mul(A[i][k], B[k][j]));
     return ret;
 }
 
-template<typename Ring>
+/// @brief 行列累乗
+/// @tparam Ring 演算を行う環・半環
+/// @note O(N^3 log(K))
+template <typename Ring>
 vector<vector<typename Ring::Type>> MatPow(
     vector<vector<typename Ring::Type>> A,
-    ll b
-) {
-    using Type=typename Ring::Type;
-    int N=A.size();
-    vector<vector<Type>> ret(N,vector<Type>(N,Ring::zero()));
-    rep(i,N) ret[i][i]=Ring::one();
+    ll b) {
+    using Type = typename Ring::Type;
+    int N = A.size();
+    vector<vector<Type>> ret(N, vector<Type>(N, Ring::zero()));
+    rep(i, N) ret[i][i] = Ring::one();
     while(b) {
-        if(b&1) ret=MatMul<Ring>(ret,A);
-        A=MatMul<Ring>(A,A);
-        b>>=1;
+        if(b & 1) ret = MatMul<Ring>(ret, A);
+        A = MatMul<Ring>(A, A);
+        b >>= 1;
     }
+    return ret;
+}
+
+/// @brief 単位行列
+template <typename Ring>
+vector<vector<typename Ring::Type>> MatId(ii N) {
+    using Type = typename Ring::Type;
+    vector<vector<Type>> ret(N, vector<Type>(N, Ring::zero()));
+    rep(i, N) ret[i][i] = Ring::one();
     return ret;
 }

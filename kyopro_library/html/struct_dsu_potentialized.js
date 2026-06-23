@@ -1,6 +1,6 @@
 var struct_dsu_potentialized =
 [
-    [ "Type", "struct_dsu_potentialized.html#a6a50de8f7bc8099eeeff22de2e98a3bb", null ],
+    [ "Type", "struct_dsu_potentialized.html#af03a9666641c77ce459c3235b2c632b6", null ],
     [ "DsuPotentialized", "struct_dsu_potentialized.html#a2e7c6c09a18844667a4f0f7c0ddebe1d", null ],
     [ "DsuPotentialized", "struct_dsu_potentialized.html#a8c36a02bd95351413d537dabdcdd40b1", null ],
     [ "find", "struct_dsu_potentialized.html#a8c3159f334ce50adad836e3cdbc996f9", null ],
@@ -10,5 +10,5 @@ var struct_dsu_potentialized =
     [ "size", "struct_dsu_potentialized.html#a072746a958e60659bf1b46a0535de056", null ],
     [ "same", "struct_dsu_potentialized.html#aabb23fd0efc64b1a349acd65504fb774", null ],
     [ "count", "struct_dsu_potentialized.html#a407010411f5318c6a00c00508f277e3d", null ],
-    [ "groups", "struct_dsu_potentialized.html#a48c35faa0af5c26536c4ace5c11b1fc5", null ]
+    [ "groups", "struct_dsu_potentialized.html#a143d2fa4dd6d6d6ea87c256e8492804a", null ]
 ];

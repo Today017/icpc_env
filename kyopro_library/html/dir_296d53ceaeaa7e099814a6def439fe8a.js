@@ -4,6 +4,7 @@ var dir_296d53ceaeaa7e099814a6def439fe8a =
     [ "bmbm.hpp", "bmbm_8hpp.html", "bmbm_8hpp" ],
     [ "convolution.hpp", "convolution_8hpp.html", "convolution_8hpp" ],
     [ "convolution_ll.hpp", "convolution__ll_8hpp.html", "convolution__ll_8hpp" ],
+    [ "divisors.hpp", "divisors_8hpp.html", "divisors_8hpp" ],
     [ "extgcd.hpp", "extgcd_8hpp.html", "extgcd_8hpp" ],
     [ "factors.hpp", "factors_8hpp.html", "factors_8hpp" ],
     [ "floor_sum.hpp", "floor__sum_8hpp.html", "floor__sum_8hpp" ],
@@ -25,6 +26,7 @@ var dir_296d53ceaeaa7e099814a6def439fe8a =
     [ "prime_enumerate.hpp", "prime__enumerate_8hpp.html", "prime__enumerate_8hpp" ],
     [ "prime_factorize.hpp", "prime__factorize_8hpp.html", "prime__factorize_8hpp" ],
     [ "primitive_root.hpp", "primitive__root_8hpp.html", "primitive__root_8hpp" ],
+    [ "throne.hpp", "throne_8hpp.html", "throne_8hpp" ],
     [ "totient.hpp", "totient_8hpp.html", "totient_8hpp" ],
     [ "totient_table.hpp", "totient__table_8hpp.html", "totient__table_8hpp" ],
     [ "xor_convolution.hpp", "xor__convolution_8hpp.html", "xor__convolution_8hpp" ]

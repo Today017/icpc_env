@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getname_0',['getName',['../debug_8hpp.html#a65b69c2a8630e2df66d8ae1a807bb71e',1,'debug.hpp']]]
+  ['eb_0',['eb',['../macro_8hpp.html#affb90253b42d68aa744e5c95a7a23f71',1,'macro.hpp']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['ull_0',['ull',['../wavelet__matrix_8hpp.html#a5f251da6a09dd744f98ee0f43f42b765',1,'ull:&#160;wavelet_matrix.hpp'],['../namespace_util.html#ad68cce600f49b6326e5bd6d195e6d5c5',1,'Util::ull']]]
+  ['s_0',['S',['../struct_range_query_1_1_apply_update___get_sum.html#aa77e274beb13221efe1f6c4b4d687585',1,'RangeQuery::ApplyUpdate_GetSum::S'],['../struct_range_query_1_1_apply_add___get_sum.html#aeaab0f7400cd778cf45a2cc7596be555',1,'RangeQuery::ApplyAdd_GetSum::S']]],
+  ['str_1',['str',['../type_8hpp.html#a75c65bb8b308ce623807c93d7911a795',1,'type.hpp']]]
 ];

@@ -7,5 +7,6 @@ var struct_comb =
     [ "factrial", "struct_comb.html#a43e86688b9a57f3f85ad22eca5a2d4f5", null ],
     [ "factinv", "struct_comb.html#ae7da039c0809fe6098e655b0957690a1", null ],
     [ "operator()", "struct_comb.html#aeaabd710b8c3740e3720a2f1542f4482", null ],
-    [ "cataran", "struct_comb.html#a04e54cb9483d9efa7db9b7a6f55b5664", null ]
+    [ "cataran", "struct_comb.html#a04e54cb9483d9efa7db9b7a6f55b5664", null ],
+    [ "combslow", "struct_comb.html#a58401a2684b9c19b888cce9ed574ae1d", null ]
 ];

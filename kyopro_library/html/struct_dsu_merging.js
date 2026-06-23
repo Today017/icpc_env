@@ -1,6 +1,6 @@
 var struct_dsu_merging =
 [
-    [ "Type", "struct_dsu_merging.html#a31648bc93d4bc29960fe93fff7ca0914", null ],
+    [ "Type", "struct_dsu_merging.html#a03cc3cdd855df2a1760611685be7f6b3", null ],
     [ "DsuMerging", "struct_dsu_merging.html#a6e06d3c3b50471bd58ea808d9b63ad77", null ],
     [ "DsuMerging", "struct_dsu_merging.html#a176fb90f26e3696383392e94d7491cdb", null ],
     [ "find", "struct_dsu_merging.html#afcf8fd363d1d2348869c0e43df04199d", null ],
@@ -10,5 +10,5 @@ var struct_dsu_merging =
     [ "size", "struct_dsu_merging.html#ac70e527b5635c63da7c8923816d4e66e", null ],
     [ "same", "struct_dsu_merging.html#a65f850029b83060a10ea56c343f2be19", null ],
     [ "count", "struct_dsu_merging.html#a76200780dde72296276b892b74e6da98", null ],
-    [ "groups", "struct_dsu_merging.html#a73a542ada89dfd4febc1766e43204834", null ]
+    [ "groups", "struct_dsu_merging.html#a5d84f3bb0157a33a95f09ad58a0d7203", null ]
 ];
