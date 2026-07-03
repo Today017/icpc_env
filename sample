@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# カラーテキスト用のANSIエスケープコード
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # 色をリセットするコード
+
+# メインロジック
+if [ -z "$1" ]; then
+    echo "Usage: $0 <id>"
+    echo "  ./a に in<id> を与えて実行し、out<id> と比較する"
+    exit 1
+fi
+
+ID=$1
+
+# コンパイル (cmp <id> で <id>.cpp を ./a にビルド)
+./cmp "$ID"
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+
+if [ ! -x "./a" ]; then
+    echo -e "${RED}Error: ./a not found (コンパイルに失敗しています).${NC}"
+    exit 1
+fi
+
+# in<id>, in<id>1, in<id>2 ... をすべて対象にする
+INPUTS=(in${ID} in${ID}[0-9]*)
+FOUND=0
+PASS=0
+TOTAL=0
+ACTUAL=$(mktemp)
+
+for INPUT in "${INPUTS[@]}"; do
+    # 存在しない (グロブが展開されなかった) ものはスキップ
+    [ -f "$INPUT" ] || continue
+    FOUND=1
+
+    # in<id><suffix> -> out<id><suffix>
+    SUFFIX="${INPUT#in${ID}}"
+    EXPECTED="out${ID}${SUFFIX}"
+    NAME="${ID}${SUFFIX}"
+    TOTAL=$((TOTAL+1))
+
+    if [ ! -f "$EXPECTED" ]; then
+        echo -e "${RED}Sample $NAME: $EXPECTED not found${NC}"
+        continue
+    fi
+
+    ./a < "$INPUT" > "$ACTUAL"
+
+    if diff "$ACTUAL" "$EXPECTED" > /dev/null; then
+        echo -e "${GREEN}Sample $NAME: AC${NC}"
+        PASS=$((PASS+1))
+    else
+        echo -e "${RED}Sample $NAME: WA${NC}"
+        echo -e "${GREEN}Input:${NC}"
+        cat "$INPUT"
+        echo -e "${GREEN}Expected Output:${NC}"
+        cat "$EXPECTED"
+        echo -e "${RED}Your Output:${NC}"
+        cat "$ACTUAL"
+        echo "----------------------------------------"
+    fi
+done
+
+rm -f "$ACTUAL"
+
+if [ $FOUND -eq 0 ]; then
+    echo -e "${RED}Error: in${ID} にマッチする入力ファイルが見つかりません.${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}$PASS/$TOTAL passed.${NC}"
+if [ $PASS -ne $TOTAL ]; then
+    exit 1
+fi
